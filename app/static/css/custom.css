@@ -1,0 +1,12 @@
+.tasks-margin {
+    margin-top: 15%;
+}
+
+.task-complete {
+    background-color: #b7b7b7 !important;
+}
+
+.alert-text {
+    text-align: center;
+    margin-top: 5%
+}

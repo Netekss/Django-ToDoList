@@ -1,0 +1,77 @@
+{% load static %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{% static 'css/custom.css' %}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title>ToDoApp-Django</title>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="/">ToDoApp</a>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link">Welcome, {{user.title}}<span class="sr-only">(current)</span></a>
+                </li>
+                {% if user == 'admin' %}
+                <li class="nav-item active">
+                    <a class="nav-link" href="/admin">Panel Admin<span class="sr-only">(current)</span></a>
+                </li>
+                {% endif %}
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'deleteall' %}">Delete All Tasks<span class="sr-only">(current)</span></a>
+                </li>
+                {% if tasks_completed|length > 0 %}
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'deletecompleted' %}">Delete Completed Tasks<span class="sr-only">(current)</span></a>
+                </li>
+                {% endif %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                </li>
+            </ul>
+            <form method="POST" action="{% url 'add' %}" class="form-inline my-2 my-lg-0">
+                {% csrf_token %}
+                {{form_add.text}}
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Add</button>
+            </form>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sm">
+            </div>
+            <div class="col-sm tasks-margin">
+                <h2>Your tasks:</h2>
+                {% if tasks|length == 0 %}
+                    Nothing to do.<br>
+                    Just chill..
+                {% else %}
+                    {% for task in tasks %}
+                        {% if task.complete == False %}
+                            <div class="list-group">
+                                <a href="{% url 'complete' task.id %}" class="list-group-item">{{task}}
+                                    <a href="{% url 'delete' task.id %}" type="button" class="btn btn-secondary btn-sm">delete</a>
+                                </a>
+                            </div>
+                        {% else %}
+                            <div class="list-group">
+                                    <a class="list-group-item task-complete">
+                                        {{task}}
+                                        <a href="{% url 'delete' task.id %}" type="button" class="btn btn-secondary btn-sm">delete</a>
+                                    </a>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+            </div>
+            <div class="col-sm">
+            </div>
+        </div>
+    </div>
+</body>
+</html>

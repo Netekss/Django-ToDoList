@@ -1,0 +1,66 @@
+{% load static %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{% static 'css/custom.css' %}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title>New account</title>
+</head>
+<body>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sm">
+            </div>
+            <!-- REGISTER -->
+            <div class="col-sm">
+                <form method="POST">
+                    <h1>Register</h1>
+                    {% csrf_token %}
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="inputGroup-sizing-default">Username</span>
+                        </div>
+                        {{form.username}}
+                    </div>
+
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="inputGroup-sizing-default">e-mail</span>
+                        </div>
+                    {{form.email}}
+                    </div>
+
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="inputGroup-sizing-default">Password</span>
+                        </div>
+                    {{form.password1}}
+                    </div>
+
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="inputGroup-sizing-default">Confirm password</span>
+                        </div>
+                    {{form.password2}}
+                    </div>
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Create</button>
+                    <a href="{% url 'login' %}" class="btn btn-outline-primary my-2 my-sm-0">Already have account?</a>
+                </form>
+
+                {% for message in messages %}
+                    <div class="alert alert-dark alert-text" role="alert">
+                         {{message}}
+                    </div>
+                {% endfor %}
+
+            </div>
+            <!-- REGISTER END-->
+            <div class="col-sm">
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
